@@ -8,12 +8,12 @@ export const ACCOMMODATION = {
         maxAdults: 2
     },
     CHALE_FAMILIA: {
-    id: 'CHALE_FAMILIA',
-    name: 'Chalé Família',
-    dailyPrice: 450,
-    minNights: 2,
-    cleaningFee: 100,
-    maxAdults: 4
+        id: 'CHALE_FAMILIA',
+        name: 'Chalé Família',
+        dailyPrice: 450,
+        minNights: 2,
+        cleaningFee: 100,
+        maxAdults: 4
   }
 };
 export const PRICING_RULES = {

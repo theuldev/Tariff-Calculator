@@ -27,23 +27,23 @@ export function calculateTarifario(checkInStr, checkOutStr, accommodationId, adu
     checkIn.setHours(0, 0, 0, 0);
     checkOut.setHours(0, 0, 0, 0);
 
-    const millisecondsPerDay = 1000 * 60 * 60 * 24;
-    const days_diff = checkOut.getTime() - checkIn.getTime();
+    const daysDiff = checkOut.getTime() - checkIn.getTime();
 
-    const nights_diff = Math.round(days_diff / millisecondsPerDay);
+    const millisecondsPerDay = 1000 * 60 * 60 * 24; 
+    const nightsQuantity = Math.round(daysDiff / millisecondsPerDay);
 
-    if (nights_diff <= 0) {
+    if (nightsQuantity <= 0) {
         return { error: "A data de check-out deve ser posterior à data de check-in." };
     }
 
-    if (nights_diff < accommodation.minNights) {
+    if (nightsQuantity < accommodation.minNights) {
         return { error: `A estadia mínima para esta acomodação é de ${accommodation.minNights} noites.` };
     }
 
     let totalDailyRate = 0;
     let currentDate = new Date(checkIn);
 
-    for (let d = 0; d < nights_diff; d++) {
+    for (let d = 0; d < nightsQuantity; d++) {
         const dayOfWeek = currentDate.getDay();
         let currentDayPrice = accommodation.dailyPrice;
         
@@ -60,11 +60,11 @@ export function calculateTarifario(checkInStr, checkOutStr, accommodationId, adu
     let additionalAdultsCost = 0;
     if (adults > accommodation.maxAdults) {
         const extraPeople = adults - accommodation.maxAdults;
-        additionalAdultsCost = extraPeople * PRICING_RULES.ADDITIONAL_ADULT_FEE * nights_diff;
+        additionalAdultsCost = extraPeople * PRICING_RULES.ADDITIONAL_ADULT_FEE * nightsQuantity;
     }
 
     const subtotal = totalDailyRate + additionalAdultsCost + accommodation.cleaningFee;
-    const discount = nights_diff > PRICING_RULES.LONG_STAY_THRESHOLD
+    const discount = nightsQuantity > PRICING_RULES.LONG_STAY_THRESHOLD
         ? subtotal * PRICING_RULES.LONG_STAY_DISCOUNT
         : 0;
         
@@ -72,7 +72,7 @@ export function calculateTarifario(checkInStr, checkOutStr, accommodationId, adu
     
     return {
         accommodationName: accommodation.name,
-        nights: nights_diff,
+        nights: nightsQuantity,
         dailyRateTotal: totalDailyRate,
         cleaningFee: accommodation.cleaningFee,
         additionalAdultsCost,

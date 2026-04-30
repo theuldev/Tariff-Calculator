@@ -46,6 +46,7 @@ export function CalculatorForm({ onCalculate }) {
                         onChange={(e) => setAccommodationId(e.target.value)}
                         className="w-full bg-zinc-900/60 border border-zinc-700/80 text-white rounded-xl px-4 py-3.5 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all appearance-none cursor-pointer"
                     >
+                        <option value="" selected disabled>Escolha uma acomodação</option>
                         {Object.values(ACCOMMODATION).map((accommodation) => (
                             <option key={accommodation.id} value={accommodation.id}>
                                 {accommodation.name} (até {accommodation.maxAdults} adultos)
