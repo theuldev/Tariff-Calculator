@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Header } from "./components/Header";
 import { CalculatorForm } from "./components/CalculatorForm";
 import { ResultCard } from "./components/ResultCard";
 
 function App() {
+  const [calculationResult, setCalculationResult] = useState(null);
+
   return (
     <div className="min-h-screen bg-zinc-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(147,51,234,0.15),rgba(255,255,255,0))] font-sans selection:bg-purple-500/30">
       <Header />
@@ -16,8 +19,8 @@ function App() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-          <CalculatorForm />
-          <ResultCard />
+          <CalculatorForm onCalculate={setCalculationResult} />
+          <ResultCard result={calculationResult} />
         </div>
       </main>
     </div>
