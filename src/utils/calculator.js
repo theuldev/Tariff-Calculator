@@ -6,13 +6,12 @@ function parseLocalDate(dateString) {
     return new Date(year, month - 1, day);
 }
 
-export function calculateTarifario(checkInStr, checkOutStr, accommodationId, adultsStr) {
+export function calculateTarifario(checkInStr, checkOutStr, accommodationId, adults) {
     const accommodation = ACCOMMODATION[accommodationId];
     if (!accommodation) {
         return { error: "Acomodação não encontrada." };
     }
 
-    const adults = Number(adultsStr);
     if (isNaN(adults) || adults <= 0) {
         return { error: "Número de adultos deve ser maior que zero." };
     }
