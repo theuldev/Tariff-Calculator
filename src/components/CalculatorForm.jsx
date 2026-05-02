@@ -11,11 +11,11 @@ export function CalculatorForm({ onCalculate, onError }) {
     const [accommodationId, setAccommodationId] = useState("");
     const [checkInStr, setCheckInStr] = useState("");
     const [checkOutStr, setCheckOutStr] = useState("");
-    const [adultsStr, setAdultsStr] = useState("");
+    const [adults, setAdults] = useState("");
     const [isCalculating, setIsCalculating] = useState(false);
 
     const handleCalculate = () => {
-        if (!accommodationId || !checkInStr || !checkOutStr || !adultsStr) {
+        if (!accommodationId || !checkInStr || !checkOutStr || !adults) {
             onError("Por favor, preencha todos os campos.");
             onCalculate(null);
             return;
@@ -24,7 +24,7 @@ export function CalculatorForm({ onCalculate, onError }) {
         setIsCalculating(true);
         
         setTimeout(() => {
-            const result = calculateTarifario(checkInStr, checkOutStr, accommodationId, adultsStr);
+            const result = calculateTarifario(checkInStr, checkOutStr, accommodationId, adults);
             if (result && result.error) {
                 onError(result.error);
                 onCalculate(null);
@@ -107,8 +107,8 @@ export function CalculatorForm({ onCalculate, onError }) {
                     <button 
                         type="button"
                         onClick={() => {
-                            const val = parseInt(adultsStr) || 1;
-                            if(val > 1) setAdultsStr(String(val - 1));
+                            const val = parseInt(adults) || 1;
+                            if(val > 1) setAdults(String(val - 1));
                         }}
                         className="px-5 py-3.5 text-zinc-600 hover:bg-zinc-200 hover:text-zinc-900 transition-colors"
                     >
@@ -118,15 +118,15 @@ export function CalculatorForm({ onCalculate, onError }) {
                         type="number"
                         min="1"
                         placeholder="Ex: 2"
-                        value={adultsStr}
-                        onChange={(e) => setAdultsStr(e.target.value)}
+                        value={adults}
+                        onChange={(e) => setAdults(e.target.value)}
                         className="w-full bg-transparent text-zinc-900 text-center outline-none py-3"
                     />
                     <button 
                         type="button"
                         onClick={() => {
-                            const val = parseInt(adultsStr) || 0;
-                            setAdultsStr(String(val + 1));
+                            const val = parseInt(adults) || 0;
+                            setAdults(String(val + 1));
                         }}
                         className="px-5 py-3.5 text-zinc-600 hover:bg-zinc-200 hover:text-zinc-900 transition-colors"
                     >
